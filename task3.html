@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            margin: 5px;
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #b8c2cd;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .visualization {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin: 20px auto;
+            height: 149px;
+            max-width: 50%;
+        }
+
+        .wall {
+            width: 30px;
+            margin: 0 5px;
+            background-color: #007bff;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .results {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .results p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Wall Visualization Application</h1>
+
+    <div class="input-container">
+        <input type="number" id="numberOfWalls" placeholder="Enter Number of Walls">
+        <input type="text" id="wallHeights" placeholder="Enter Wall Heights (e.g., 5#3#7)">
+        <button onclick="visualizeWalls()">Visualize Walls</button>
+    </div>
+
+    <div class="visualization" id="visualization"></div>
+
+    <div class="results" id="results"></div>
+
+    <script>
+        function visualizeWalls() {
+            const numberOfWalls = parseInt(document.getElementById('numberOfWalls').value);
+            const wallHeightsInput = document.getElementById('wallHeights').value;
+
+            if (isNaN(numberOfWalls) || numberOfWalls <= 0) {
+                alert('Please enter a valid number of walls.');
+                return;
+            }
+
+            const wallHeights = wallHeightsInput.split('#').map(Number);
+
+            if (wallHeights.length !== numberOfWalls) {
+                alert(`Please enter exactly ${numberOfWalls} wall heights separated by '#'.`);
+                return;
+            }
+
+            if (wallHeights.some(isNaN)) {
+                alert('Please ensure all wall heights are valid numbers.');
+                return;
+            }
+
+            // Render walls
+            const visualizationContainer = document.getElementById('visualization');
+            visualizationContainer.innerHTML = '';
+
+            wallHeights.forEach(height => {
+                const wall = document.createElement('div');
+                wall.className = 'wall';
+                wall.style.height = `${height * 10}px`;
+                wall.innerText = height;
+                visualizationContainer.appendChild(wall);
+            });
+
+            // Calculate visible walls
+            const visibleFromLeft = calculateVisibleWalls(wallHeights);
+            const visibleFromRight = calculateVisibleWalls(wallHeights.slice().reverse());
+
+            // Display results
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = `
+                <p><strong>Visible Walls from Left:</strong> ${visibleFromLeft}</p>
+                <p><strong>Visible Walls from Right:</strong> ${visibleFromRight}</p>
+            `;
+        }
+
+        function calculateVisibleWalls(walls) {
+            let maxSeen = 0;
+            let count = 0;
+
+            walls.forEach(height => {
+                if (height > maxSeen) {
+                    maxSeen = height;
+                    count++;
+                }
+            });
+
+            return count;
+        }
+    </script>
+</body>
+
+</html>

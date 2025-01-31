@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Color Changer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            flex-direction: column;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        button.red {
+            background-color: red;
+        }
+        button.green {
+            background-color: green;
+        }
+        button.yellow {
+            background-color: yellow;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="red" onclick="changeColor('red')">Red</button>
+        <button class="green" onclick="changeColor('green')">Green</button>
+        <button class="yellow" onclick="changeColor('yellow')">Yellow</button>
+    </div>
+
+    <script>
+        function changeColor(color) {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.style.backgroundColor = color;
+                button.style.color = color === 'yellow' ? 'black' : 'white';
+            });
+        }
+    </script>
+</body>
+</html>

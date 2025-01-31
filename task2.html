@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Color Rotation</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .button {
+            width: 100px;
+            height: 50px;
+            margin: 10px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #rotate {
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button id="btn1" class="button" style="background-color: red; color: black;">BTN1</button>
+    <button id="btn2" class="button" style="background-color: green; color: black;">BTN2</button>
+    <button id="btn3" class="button" style="background-color: yellow; color: black;">BTN3</button>
+    <button id="rotate" class="button">Rotate</button>
+</div>
+    <script>
+        const btn1 = document.getElementById('btn1');
+        const btn2 = document.getElementById('btn2');
+        const btn3 = document.getElementById('btn3');
+        const rotateButton = document.getElementById('rotate');
+
+        rotateButton.addEventListener('click', () => {
+            const color1 = window.getComputedStyle(btn1).backgroundColor;
+            const color2 = window.getComputedStyle(btn2).backgroundColor;
+            const color3 = window.getComputedStyle(btn3).backgroundColor;
+
+            // Rotate colors clockwise
+            btn1.style.backgroundColor = color3;
+            btn2.style.backgroundColor = color1;
+            btn3.style.backgroundColor = color2;
+        });
+    </script>
+
+</body>
+</html>
